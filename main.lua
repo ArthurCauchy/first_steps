@@ -4,15 +4,28 @@ local ButtonUI = require "ButtonUI"
 local WIDTH = 800
 local HEIGHT = 600
 
-local rect = ButtonUI(300,
+--titleMusic = love.audio.newSource("RPG-Misty_Mountains.ogg")
+--musicPlaying = false
+
+local exitButton = ButtonUI(300,
     50,
     WIDTH/2 - 300/2, 520,
     "Exit game",
     34)
-rect:setBackgroundColor(221, 37, 2)
-rect:setTextColor(0, 0, 0)
+exitButton:setBackgroundColor(221, 37, 2)
+exitButton:setTextColor(0, 0, 0)
+
+local musicButton = ButtonUI(300,
+    50,
+    WIDTH/2 - 300/2, 420,
+    "Play music",
+    34)
+musicButton:setBackgroundColor(0, 0, 255)
+musicButton:setTextColor(0, 0, 0)
 
 function love.load()
+    titleMusic = love.audio.newSource("bgm.ogg")
+
     love.window.setMode(WIDTH, HEIGHT, {resizable=true})
     CScreen.init(WIDTH, HEIGHT, true)
     love.window.setTitle("A cool window !")
@@ -25,7 +38,8 @@ end
 
 function love.draw()
     CScreen.apply()
-    rect:draw()
+    exitButton:draw()
+    musicButton:draw()
     CScreen.cease()
 end
 
@@ -47,13 +61,23 @@ function love.keyreleased(key)
 end
 
 function love.mousereleased(x, y, button)
-    if button == 1 and rect:isMouseOnIt(x, y) then
+	x, y = CScreen.project(x, y)
+    if button == 1 and exitButton:isMouseOnIt(x, y) then
         love.event.quit()
+    elseif button == 1 and musicButton:isMouseOnIt(x, y) then
+        if titleMusic:isPlaying() then
+            musicButton:setText("Play music")
+            love.audio.pause(titleMusic)
+        else
+            musicButton:setText("Pause music")
+            love.audio.play(titleMusic)
+        end
     end
 end
 
 function love.mousemoved(x, y, dx, dy)
-    if rect:isMouseOnIt(x, y) then
-        rect:setBackgroundColor(255, 255, 255)
+	x, y = CScreen.project(x, y)
+    if exitButton:isMouseOnIt(x, y) then
+        exitButton:setBackgroundColor(255, 255, 255)
     end
 end

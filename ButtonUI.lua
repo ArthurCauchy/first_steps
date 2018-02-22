@@ -24,12 +24,16 @@ function ButtonUI:_init(width, height, x, y, text, fontSize)
     self.textColor = {255, 255, 255}
 end
 
+function ClickableUI:setText(newval)
+    self.text = newval
+end
+
 function ButtonUI:draw()
     love.graphics.setColor(self.bgColor)
     love.graphics.rectangle("fill", self.x, self.y, self.width, self.height)
     love.graphics.setColor(self.textColor)
     love.graphics.setFont(self.font)
-    love.graphics.print("Exit game",
+    love.graphics.print(self.text,
         self.x + self.width/2 - self.font:getWidth(self.text)/2,
         self.y + self.height/2 - self.font:getHeight(self.text)/2)
 end
