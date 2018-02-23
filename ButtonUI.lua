@@ -1,5 +1,9 @@
 local ClickableUI = require "ClickableUI"
 
+local img = love.graphics.newImage("res/UI/buttonLong_beige.png")
+local imgPressed = love.graphics.newImage("res/UI/buttonLong_beige_pressed.png")
+
+
 local ButtonUI = {}
 ButtonUI.__index = ButtonUI
 
@@ -13,15 +17,12 @@ setmetatable(ButtonUI, {
 })
 
 function ButtonUI:_init(width, height, x, y, text, fontSize)
-    self.width = width
-    self.height = height
-    self.x = x
-    self.y = y
+    ClickableUI._init(self, width, height, x, y)
+    
     self.text = text
-    self.font = love.graphics.newFont(fontSize)
+    self.font = love.graphics.newFont("res/fonts/Gamaliel.otf", fontSize)
 
-    self.bgColor = {0, 0, 0}
-    self.textColor = {255, 255, 255}
+    self.image = img
 end
 
 function ClickableUI:setText(newval)
@@ -29,13 +30,13 @@ function ClickableUI:setText(newval)
 end
 
 function ButtonUI:draw()
-    love.graphics.setColor(self.bgColor)
-    love.graphics.rectangle("fill", self.x, self.y, self.width, self.height)
-    love.graphics.setColor(self.textColor)
+    love.graphics.setColor(255, 255, 255)
+    love.graphics.draw(self.image, self.x, self.y, 0, self.width / self.image:getWidth(), self.height / self.image:getHeight())
+    love.graphics.setColor(0, 0, 0)
     love.graphics.setFont(self.font)
     love.graphics.print(self.text,
         self.x + self.width/2 - self.font:getWidth(self.text)/2,
-        self.y + self.height/2 - self.font:getHeight(self.text)/2)
+        self.y + self.height/2 - (self.font:getHeight(self.text)/2) * 1.15)
 end
 
 function ButtonUI:isMouseOnIt(x, y)
@@ -43,12 +44,16 @@ function ButtonUI:isMouseOnIt(x, y)
         and y > self.y and y < self.y + self.height)
 end
 
-function ButtonUI:setBackgroundColor(r, g, b)
-    self.bgColor = {r, g, b}
+function ButtonUI:isPressed(value)
+    return (self.image == imgPressed)
 end
 
-function ButtonUI:setTextColor(r, g, b)
-    self.textColor = {r, g, b}
+function ButtonUI:setPressed(value)
+    if value then
+        self.image = imgPressed
+    else
+        self.image = img
+    end
 end
 
 return ButtonUI
