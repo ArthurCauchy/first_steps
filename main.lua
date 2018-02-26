@@ -8,14 +8,20 @@ local HAND_CURSOR = love.mouse.getSystemCursor("hand")
 
 local exitButton = ButtonUI(300,
     50,
-    WIDTH/2 - 300/2, 520,
+    WIDTH/2 - 300/2, 500,
     "Exit game",
     34)
 
 local musicButton = ButtonUI(300,
     50,
-    WIDTH/2 - 300/2, 420,
+    WIDTH/2 - 300/2, 300,
     "Play music",
+    34)
+
+local playButton = ButtonUI(300,
+    50,
+    WIDTH/2 - 300/2, 200,
+    "Play",
     34)
 
 local sb = SoundBank()
@@ -41,6 +47,7 @@ function love.draw()
     CScreen.apply()
     exitButton:draw()
     musicButton:draw()
+    playButton:draw()
     CScreen.cease()
 end
 
@@ -69,6 +76,9 @@ function love.mousepressed(x, y, button)
     elseif button == 1 and musicButton:isMouseOnIt(x, y) then
         sb:playSound("buttonClick")
         musicButton:setPressed(true)
+    elseif button == 1 and playButton:isMouseOnIt(x, y) then
+        sb:playSound("buttonClick")
+        playButton:setPressed(true)
     end
 end
 
@@ -77,6 +87,7 @@ function love.mousereleased(x, y, button)
 
     exitButton:setPressed(false)
     musicButton:setPressed(false)
+    playButton:setPressed(false)
     if button == 1 and exitButton:isMouseOnIt(x, y) then
         love.mouse.setCursor()
         love.event.quit()
@@ -93,7 +104,7 @@ end
 
 function love.mousemoved(x, y, dx, dy)
 	x, y = CScreen.project(x, y)
-    if exitButton:isMouseOnIt(x, y) or musicButton:isMouseOnIt(x, y) then
+    if exitButton:isMouseOnIt(x, y) or musicButton:isMouseOnIt(x, y) or playButton:isMouseOnIt(x, y) then
         love.mouse.setCursor(HAND_CURSOR)
     else
         love.mouse.setCursor()
