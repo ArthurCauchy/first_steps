@@ -16,6 +16,7 @@ currentScene = TitleScreen
 
 function initSounds()
     sb:addSound("bgm", "res/musics/bgm.ogg", false)
+    sb:addSound("bgmBattle", "res/musics/Juhani Junkala [Retro Game Music Pack] Level 3.wav", false)
     sb:addSound("buttonClick", "res/sounds/button_click.mp3", true)
 end
 

@@ -40,6 +40,7 @@ function TitleScreen.mousepressed(x, y, button)
         musicButton:setPressed(true)
     elseif button == 1 and playButton:isMouseOnIt(x, y) then
         sb:playSound("buttonClick")
+        sb:playSound("bgmBattle")
         playButton:setPressed(true)
     end
 end
