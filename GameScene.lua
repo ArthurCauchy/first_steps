@@ -43,8 +43,6 @@ local action = framesidle
 local playerX = 0
 local playerY = 200
 
-local lastKeyPress = 0
-
 function GameScene.draw()
     love.graphics.setColor(255, 255, 255)
     --love.graphics.rectangle("fill", 400, 200, 45, 100)
@@ -63,16 +61,22 @@ end
 function GameScene.update(dt)
     local animationSpeed = 0.1
     elapsed = elapsed + dt
-    if elapsed >= 0.1 then
-        lastKeyPress = lastKeyPress + 1
-        if lastKeyPress >= 5 then
-            lastKeyPress = 0
+    if love.keyboard.isDown("right") then
+        playerX = playerX + 2
+        if action ~= framesForward then
+            currentFrame = 1
+            action = framesForward
+        end
+    elseif love.keyboard.isDown("left") then
+        playerX = playerX - 1
+        if action ~= framesBackward then
+            currentFrame = 1
+            action = framesBackward
+        end
+    else
+        if action ~= framesidle then
             currentFrame = 1
             action = framesidle
-        elseif action == framesForward then
-            playerX = playerX + 10
-        elseif action == framesBackward then
-            playerX = playerX - 10
         end
     end
     if elapsed >= animationSpeed then
@@ -86,7 +90,7 @@ function GameScene.update(dt)
 end
 
 function GameScene.keypressed(key)
-    lastKeyPress = 0
+    --[[lastKeyPress = 0
     if key == "right" then
         elapsed = 0
         currentFrame = 1
@@ -99,7 +103,7 @@ function GameScene.keypressed(key)
         elapsed = 0
         currentFrame = 1
         action = framesidle
-    end
+    end--]]
 end
 
 function GameScene.keyreleased(key)
