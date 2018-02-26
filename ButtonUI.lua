@@ -1,7 +1,7 @@
 local ClickableUI = require "ClickableUI"
 
-local img = love.graphics.newImage("res/UI/buttonLong_beige.png")
-local imgPressed = love.graphics.newImage("res/UI/buttonLong_beige_pressed.png")
+local img = love.graphics.newImage("res/images/UI/buttonLong_beige.png")
+local imgPressed = love.graphics.newImage("res/images/UI/buttonLong_beige_pressed.png")
 
 
 local ButtonUI = {}

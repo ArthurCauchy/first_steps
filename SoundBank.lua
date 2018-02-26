@@ -33,4 +33,8 @@ function SoundBank:pauseSound(name)
     love.audio.pause(self.bank[name])
 end
 
+function SoundBank:stopSound(name)
+    love.audio.stop(self.bank[name])
+end
+
 return SoundBank

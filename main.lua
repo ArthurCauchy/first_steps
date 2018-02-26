@@ -1,30 +1,18 @@
-local CScreen = require "cscreen"
-local SoundBank = require "SoundBank"
-local ButtonUI = require "ButtonUI"
+CScreen = require "cscreen"
 
-local WIDTH = 800
-local HEIGHT = 600
-local HAND_CURSOR = love.mouse.getSystemCursor("hand")
+WIDTH = 800
+HEIGHT = 600
+HAND_CURSOR = love.mouse.getSystemCursor("hand")
 
-local exitButton = ButtonUI(300,
-    50,
-    WIDTH/2 - 300/2, 500,
-    "Exit game",
-    34)
+SoundBank = require "SoundBank"
+ButtonUI = require "ButtonUI"
 
-local musicButton = ButtonUI(300,
-    50,
-    WIDTH/2 - 300/2, 300,
-    "Play music",
-    34)
+TitleScreen = require "TitleScreen"
+GameScene = require "GameScene"
 
-local playButton = ButtonUI(300,
-    50,
-    WIDTH/2 - 300/2, 200,
-    "Play",
-    34)
+sb = SoundBank()
 
-local sb = SoundBank()
+currentScene = TitleScreen
 
 function initSounds()
     sb:addSound("bgm", "res/musics/bgm.ogg", false)
@@ -45,13 +33,16 @@ end
 
 function love.draw()
     CScreen.apply()
-    exitButton:draw()
-    musicButton:draw()
-    playButton:draw()
+    currentScene.draw()
     CScreen.cease()
 end
 
 function love.update(dt)
+    currentScene.update(dt)
+end
+
+function love.keypressed(key)
+    currentScene.keypressed(key)
 end
 
 function love.keyreleased(key)
@@ -62,51 +53,23 @@ function love.keyreleased(key)
             love.window.setMode(WIDTH, HEIGHT, {resizable=true})
             CScreen.update(WIDTH, HEIGHT)
         end
-    end
-    if key == "m" then
+    elseif key == "m" then
         love.window.maximize()
     end
+    currentScene.keyreleased(key)
 end
 
 function love.mousepressed(x, y, button)
     x, y = CScreen.project(x, y)
-    if button == 1 and exitButton:isMouseOnIt(x, y) then
-        sb:playSound("buttonClick")
-        exitButton:setPressed(true)
-    elseif button == 1 and musicButton:isMouseOnIt(x, y) then
-        sb:playSound("buttonClick")
-        musicButton:setPressed(true)
-    elseif button == 1 and playButton:isMouseOnIt(x, y) then
-        sb:playSound("buttonClick")
-        playButton:setPressed(true)
-    end
+    currentScene.mousepressed(x, y, button)
 end
 
 function love.mousereleased(x, y, button)
 	x, y = CScreen.project(x, y)
-
-    exitButton:setPressed(false)
-    musicButton:setPressed(false)
-    playButton:setPressed(false)
-    if button == 1 and exitButton:isMouseOnIt(x, y) then
-        love.mouse.setCursor()
-        love.event.quit()
-    elseif button == 1 and musicButton:isMouseOnIt(x, y) then
-        if sb:getSound("bgm"):isPlaying() then
-            musicButton:setText("Play music")
-            sb:pauseSound("bgm")
-        else
-            musicButton:setText("Pause music")
-            sb:playSound("bgm")
-        end
-    end
+    currentScene.mousereleased(x, y, button)
 end
 
 function love.mousemoved(x, y, dx, dy)
 	x, y = CScreen.project(x, y)
-    if exitButton:isMouseOnIt(x, y) or musicButton:isMouseOnIt(x, y) or playButton:isMouseOnIt(x, y) then
-        love.mouse.setCursor(HAND_CURSOR)
-    else
-        love.mouse.setCursor()
-    end
+    currentScene.mousemoved(x, y, dx, dy)
 end
