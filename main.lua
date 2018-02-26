@@ -25,6 +25,7 @@ function love.load()
     love.window.setMode(WIDTH, HEIGHT, {resizable=true})
     love.window.setTitle("A cool window !")
     love.graphics.setBackgroundColor(0, 0, 0)
+    love.keyboard.setKeyRepeat(true)
 end
 
 function love.resize(width, height)
