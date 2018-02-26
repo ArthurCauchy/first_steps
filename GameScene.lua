@@ -1,17 +1,13 @@
 local GameScene = {}
 
 local sakuyaSprite = love.graphics.newImage("res/images/sprites/sakuya.png")
-local s = 55
 local framesidle = {
-    love.graphics.newQuad(9, 98, 50, 100, sakuyaSprite:getDimensions()),
-    love.graphics.newQuad(63, 98, 50, 100, sakuyaSprite:getDimensions()),
-    love.graphics.newQuad(117, 98, 50, 100, sakuyaSprite:getDimensions()),
-    love.graphics.newQuad(171, 98, 50, 100, sakuyaSprite:getDimensions()),
-    love.graphics.newQuad(225, 98, 50, 100, sakuyaSprite:getDimensions()),
-    love.graphics.newQuad(279, 98, 50, 100, sakuyaSprite:getDimensions()),
-    love.graphics.newQuad(333, 98, 50, 100, sakuyaSprite:getDimensions()),
-    love.graphics.newQuad(9, 98, 50, 100, sakuyaSprite:getDimensions()),
-    love.graphics.newQuad(63, 98, 50, 100, sakuyaSprite:getDimensions()),
+    love.graphics.newQuad(9, 100, 50, 100, sakuyaSprite:getDimensions()),
+    love.graphics.newQuad(64, 100, 50, 100, sakuyaSprite:getDimensions()),
+    love.graphics.newQuad(118, 100, 50, 100, sakuyaSprite:getDimensions()),
+    love.graphics.newQuad(172, 100, 50, 100, sakuyaSprite:getDimensions()),
+    love.graphics.newQuad(226, 100, 50, 100, sakuyaSprite:getDimensions()),
+    love.graphics.newQuad(277, 100, 50, 100, sakuyaSprite:getDimensions())
 }
 local framesForward = {
     love.graphics.newQuad(530, 345, 50, 100, sakuyaSprite:getDimensions()),
@@ -42,9 +38,15 @@ local currentFrame = 1
 local action = framesidle
 
 function GameScene.draw()
-    love.graphics.setBackgroundColor(255, 150, 0)
+    --love.graphics.setBackgroundColor(255, 150, 0)
     love.graphics.setColor(255, 255, 255)
-    love.graphics.draw(sakuyaSprite, action[currentFrame], 200, 200)
+    love.graphics.draw(sakuyaSprite, action[currentFrame], 400, 200)
+    --love.graphics.draw(sakuyaSprite, framesidle[1], 200, 0)
+    --love.graphics.draw(sakuyaSprite, framesidle[2], 200, 100)
+    --love.graphics.draw(sakuyaSprite, framesidle[3], 200, 200)
+    --love.graphics.draw(sakuyaSprite, framesidle[4], 200, 300)
+    --love.graphics.draw(sakuyaSprite, framesidle[5], 200, 400)
+    --love.graphics.draw(sakuyaSprite, framesidle[6], 200, 500)
     love.graphics.setColor(102, 102, 153)
     love.graphics.rectangle("fill", 0, 300, WIDTH, HEIGHT - 300)
 end
