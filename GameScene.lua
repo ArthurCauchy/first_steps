@@ -11,28 +11,37 @@ local framesidle = {
     totalframes = 6
 }
 local framesForward = {
-    love.graphics.newQuad(535, 345, 50, 100, sakuyaSprite:getDimensions()),
-    love.graphics.newQuad(583, 345, 50, 100, sakuyaSprite:getDimensions()),
-    love.graphics.newQuad(631, 345, 50, 100, sakuyaSprite:getDimensions()),
-    love.graphics.newQuad(679, 345, 50, 100, sakuyaSprite:getDimensions()),
-    love.graphics.newQuad(727, 345, 50, 100, sakuyaSprite:getDimensions()),
-    love.graphics.newQuad(776, 345, 50, 100, sakuyaSprite:getDimensions()),
-    love.graphics.newQuad(825, 345, 50, 100, sakuyaSprite:getDimensions()),
-    love.graphics.newQuad(873, 345, 50, 100, sakuyaSprite:getDimensions()),
-    love.graphics.newQuad(921, 345, 50, 100, sakuyaSprite:getDimensions()),
+    love.graphics.newQuad(535, 346, 50, 100, sakuyaSprite:getDimensions()),
+    love.graphics.newQuad(583, 346, 50, 100, sakuyaSprite:getDimensions()),
+    love.graphics.newQuad(631, 346, 50, 100, sakuyaSprite:getDimensions()),
+    love.graphics.newQuad(679, 346, 50, 100, sakuyaSprite:getDimensions()),
+    love.graphics.newQuad(727, 346, 50, 100, sakuyaSprite:getDimensions()),
+    love.graphics.newQuad(776, 346, 50, 100, sakuyaSprite:getDimensions()),
+    love.graphics.newQuad(825, 346, 50, 100, sakuyaSprite:getDimensions()),
+    love.graphics.newQuad(873, 346, 50, 100, sakuyaSprite:getDimensions()),
+    love.graphics.newQuad(921, 346, 50, 100, sakuyaSprite:getDimensions()),
     totalframes = 9
 }
 local framesBackward = {
-    love.graphics.newQuad(9, 345, 45, 100, sakuyaSprite:getDimensions()),
-    love.graphics.newQuad(56, 345, 45, 100, sakuyaSprite:getDimensions()),
-    love.graphics.newQuad(103, 345, 45, 100, sakuyaSprite:getDimensions()),
-    love.graphics.newQuad(149, 345, 45, 100, sakuyaSprite:getDimensions()),
-    love.graphics.newQuad(200, 345, 45, 100, sakuyaSprite:getDimensions()),
-    love.graphics.newQuad(250, 345, 45, 100, sakuyaSprite:getDimensions()),
-    love.graphics.newQuad(297, 345, 45, 100, sakuyaSprite:getDimensions()),
-    love.graphics.newQuad(347, 345, 45, 100, sakuyaSprite:getDimensions()),
-    love.graphics.newQuad(398, 345, 45, 100, sakuyaSprite:getDimensions()),
+    love.graphics.newQuad(9, 346, 45, 100, sakuyaSprite:getDimensions()),
+    love.graphics.newQuad(56, 346, 45, 100, sakuyaSprite:getDimensions()),
+    love.graphics.newQuad(103, 346, 45, 100, sakuyaSprite:getDimensions()),
+    love.graphics.newQuad(149, 346, 45, 100, sakuyaSprite:getDimensions()),
+    love.graphics.newQuad(200, 346, 45, 100, sakuyaSprite:getDimensions()),
+    love.graphics.newQuad(250, 346, 45, 100, sakuyaSprite:getDimensions()),
+    love.graphics.newQuad(297, 346, 45, 100, sakuyaSprite:getDimensions()),
+    love.graphics.newQuad(347, 346, 45, 100, sakuyaSprite:getDimensions()),
+    love.graphics.newQuad(398, 346, 45, 100, sakuyaSprite:getDimensions()),
     totalframes = 9
+}
+local framesAttack = {
+    love.graphics.newQuad(9, 1084, 55, 100, sakuyaSprite:getDimensions()),
+    love.graphics.newQuad(64, 1084, 55, 100, sakuyaSprite:getDimensions()),
+    love.graphics.newQuad(119, 1084, 55, 100, sakuyaSprite:getDimensions()),
+    love.graphics.newQuad(174, 1084, 65, 100, sakuyaSprite:getDimensions()),
+    love.graphics.newQuad(240, 1084, 55, 100, sakuyaSprite:getDimensions()),
+    love.graphics.newQuad(295, 1084, 55, 100, sakuyaSprite:getDimensions()),
+    totalframes = 6
 }
 
 local elapsed = 0
@@ -43,7 +52,10 @@ local action = framesidle
 local playerX = 0
 local playerY = 200
 
+local hpBar = HealthBarUI(10, 10, 10)
+
 function GameScene.draw()
+    hpBar:draw()
     love.graphics.setColor(255, 255, 255)
     --love.graphics.rectangle("fill", 400, 200, 45, 100)
     love.graphics.draw(sakuyaSprite, action[currentFrame], playerX, playerY)
@@ -61,7 +73,14 @@ end
 function GameScene.update(dt)
     local animationSpeed = 0.1
     elapsed = elapsed + dt
-    if love.keyboard.isDown("right") then
+    if action == framesAttack then
+        if currentFrame == 4 then
+            sb:playSound("swordSlash")
+        elseif currentFrame == action.totalframes then
+            currentFrame = 1
+            action = framesidle
+        end
+    elseif love.keyboard.isDown("right") then
         playerX = playerX + 2
         if action ~= framesForward then
             currentFrame = 1
@@ -104,6 +123,14 @@ function GameScene.keypressed(key)
         currentFrame = 1
         action = framesidle
     end--]]
+    if key == "[" then
+        hpBar:setHp(hpBar:getHp()-1)
+    elseif key == "]" then
+        hpBar:setHp(hpBar:getHp()+1)
+    elseif key == "d" and action ~= framesAttack then
+        currentFrame = 1
+        action = framesAttack
+    end
 end
 
 function GameScene.keyreleased(key)

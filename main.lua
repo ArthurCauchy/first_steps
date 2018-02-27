@@ -6,6 +6,7 @@ HAND_CURSOR = love.mouse.getSystemCursor("hand")
 
 SoundBank = require "SoundBank"
 ButtonUI = require "ButtonUI"
+HealthBarUI = require "HealthBarUI"
 
 TitleScreen = require "TitleScreen"
 GameScene = require "GameScene"
@@ -18,6 +19,7 @@ function initSounds()
     sb:addSound("bgm", "res/musics/bgm.ogg", false)
     sb:addSound("bgmBattle", "res/musics/Juhani Junkala [Retro Game Music Pack] Level 3.wav", false)
     sb:addSound("buttonClick", "res/sounds/button_click.mp3", true)
+    sb:addSound("swordSlash", "res/sounds/sword sound.wav", true)
 end
 
 function love.load()

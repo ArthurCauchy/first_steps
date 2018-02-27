@@ -25,8 +25,11 @@ function SoundBank:getSound(name)
     return self.bank[name]
 end
 
-function SoundBank:playSound(name)
+function SoundBank:playSound(name, volume)
     love.audio.play(self.bank[name])
+    if type(volume) == "number" then
+        self.bank[name]:setVolume(volume)
+    end
 end
 
 function SoundBank:pauseSound(name)
