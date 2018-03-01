@@ -40,7 +40,6 @@ function TitleScreen.mousepressed(x, y, button)
         musicButton:setPressed(true)
     elseif button == 1 and playButton:isMouseOnIt(x, y) then
         sb:playSound("buttonClick")
-        sb:playSound("bgmBattle", 0.3)
         playButton:setPressed(true)
     end
 end
@@ -62,6 +61,7 @@ function TitleScreen.mousereleased(x, y, button)
         end
     elseif button == 1 and playButton:isMouseOnIt(x, y) then
         sb:stopSound("bgm")
+        sb:playSound("bgmBattle", 0.3)
         love.mouse.setCursor()
         currentScene = GameScene
     end

@@ -52,12 +52,14 @@ local action = framesidle
 local playerX = 0
 local playerY = 200
 
-local hpBar = HealthBarUI(10, 10, 10)
+local interface = Interface()
+
+local level1 = Level()
+level1:addGround("ground")
 
 function GameScene.draw()
-    hpBar:draw()
+    level1:draw()
     love.graphics.setColor(255, 255, 255)
-    --love.graphics.rectangle("fill", 400, 200, 45, 100)
     love.graphics.draw(sakuyaSprite, action[currentFrame], playerX, playerY)
     --love.graphics.draw(sakuyaSprite, framesBackward[4], 200, 0)
     --love.graphics.draw(sakuyaSprite, framesBackward[5], 200, 100)
@@ -65,9 +67,7 @@ function GameScene.draw()
     --love.graphics.draw(sakuyaSprite, framesBackward[7], 200, 300)
     --love.graphics.draw(sakuyaSprite, framesBackward[8], 200, 400)
     --love.graphics.draw(sakuyaSprite, framesBackward[9], 200, 500)
-    love.graphics.setColor(102, 102, 153)
-    --love.graphics.rectangle("fill", 0, 0, 200, HEIGHT)
-    love.graphics.rectangle("fill", 0, 300, WIDTH, HEIGHT - 300)
+    interface:draw()
 end
 
 function GameScene.update(dt)
@@ -109,25 +109,7 @@ function GameScene.update(dt)
 end
 
 function GameScene.keypressed(key)
-    --[[lastKeyPress = 0
-    if key == "right" then
-        elapsed = 0
-        currentFrame = 1
-        action = framesForward
-    elseif key == "left" then
-        elapsed = 0
-        currentFrame = 1
-        action = framesBackward
-    elseif key == "up" then
-        elapsed = 0
-        currentFrame = 1
-        action = framesidle
-    end--]]
-    if key == "[" then
-        hpBar:setHp(hpBar:getHp()-1)
-    elseif key == "]" then
-        hpBar:setHp(hpBar:getHp()+1)
-    elseif key == "d" and action ~= framesAttack then
+    if key == "d" and action ~= framesAttack then
         currentFrame = 1
         action = framesAttack
     end

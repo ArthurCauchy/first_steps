@@ -13,11 +13,14 @@ function SoundBank:_init()
     self.bank = {}
 end
 
-function SoundBank:addSound(name, filename, static)
+function SoundBank:addSound(name, filename, static, looping)
     if (static) then
         self.bank[name] = love.audio.newSource(filename, "static")
     else
         self.bank[name] = love.audio.newSource(filename)
+    end
+    if type(looping) == "boolean" then
+        self.bank[name]:setLooping(looping)
     end
 end
 

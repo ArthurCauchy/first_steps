@@ -7,6 +7,8 @@ HAND_CURSOR = love.mouse.getSystemCursor("hand")
 SoundBank = require "SoundBank"
 ButtonUI = require "ButtonUI"
 HealthBarUI = require "HealthBarUI"
+Interface = require "Interface"
+Level = require "Level"
 
 TitleScreen = require "TitleScreen"
 GameScene = require "GameScene"
@@ -16,8 +18,9 @@ sb = SoundBank()
 currentScene = TitleScreen
 
 function initSounds()
-    sb:addSound("bgm", "res/musics/bgm.ogg", false)
-    sb:addSound("bgmBattle", "res/musics/Juhani Junkala [Retro Game Music Pack] Level 3.wav", false)
+    sb:addSound("bgm", "res/musics/bgm.ogg", false, true)
+    sb:addSound("bgmBattle", "res/musics/Juhani Junkala [Retro Game Music Pack] Level 3.wav", false, true)
+
     sb:addSound("buttonClick", "res/sounds/button_click.mp3", true)
     sb:addSound("swordSlash", "res/sounds/sword sound.wav", true)
 end
